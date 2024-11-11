@@ -1,0 +1,37 @@
+From 7d9f9eaaedc72e5fbb60a8f2c5f0741c36e3123a Mon Sep 17 00:00:00 2001
+From: YourName <your.email@example.com>
+Date: Mon, 8 Nov 2024 12:34:56 +0000
+Subject: [PATCH] Add a new method to handle user input and update existing method
+
+---
+ src/main/java/com/example/HelloWorld.java | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/src/main/java/com/example/HelloWorld.java b/src/main/java/com/example/HelloWorld.java
+index d1e6f9e..a2b5c3d 100644
+--- a/src/main/java/com/example/HelloWorld.java
++++ b/src/main/java/com/example/HelloWorld.java
+@@ -1,7 +1,8 @@
+ package com.example;
+
+ public class HelloWorld {
+-    public void greet() {
+-        System.out.println("Hello, World!");
++    public void greet(String name) {
++        if (name == null || name.isEmpty()) {
++            System.out.println("Hello, World!");
++        } else {
++            System.out.println("Hello, " + name + "!");
++        }
+     }
+
++    public void handleUserInput() {
++        Scanner scanner = new Scanner(System.in);
++        System.out.print("Enter your name: ");
++        String name = scanner.nextLine();
++        greet(name);
++        scanner.close();
++    }
+ }
+--
+2.30.1
