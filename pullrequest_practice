@@ -1,0 +1,121 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+public class School {
+
+    public static class Students {
+        String StudentName;
+        int RollNumber;
+        int Age;
+        String Standard;
+        static ArrayList<Students> StudentList = new ArrayList<>();
+
+        public Students(String StudentName, int RollNumber, int Age, String Standard) {
+            this.StudentName = StudentName;
+            this.RollNumber = RollNumber;
+            this.Age = Age;
+            this.Standard = Standard;
+        }
+
+        static {
+            StudentList.add(new Students("Barath", 101, 15, "Tenth grade"));
+            StudentList.add(new Students("Dinesh", 102, 15, "Tenth grade"));
+            StudentList.add(new Students("Gokul", 103, 15, "Tenth grade"));
+        }
+
+        @Override
+        public String toString() {
+            return "Name: " + StudentName + ", Roll Number: " + RollNumber +
+                    ", Age: " + Age + ", Standard: " + Standard + "\n";
+        }
+    }
+
+    public static class Maps {
+        public enum SUBJECT {
+            Tamil, English, Maths, Science, Social
+        }
+
+        private static Map<String, Map<SUBJECT, Integer>> studentMarks = new HashMap<>();
+
+        public Maps() {
+            for (Students student : Students.StudentList) {
+                studentMarks.put(student.StudentName, new HashMap<>());
+            }
+            assignInitialMarks();
+        }
+
+        private void assignInitialMarks() {
+            assignMarks("Barath", SUBJECT.Tamil, 85);
+            assignMarks("Barath", SUBJECT.English, 90);
+            assignMarks("Barath", SUBJECT.Maths, 88);
+            assignMarks("Barath", SUBJECT.Science, 92);
+            assignMarks("Barath", SUBJECT.Social, 80);
+
+            assignMarks("Dinesh", SUBJECT.Tamil, 75);
+            assignMarks("Dinesh", SUBJECT.English, 80);
+            assignMarks("Dinesh", SUBJECT.Maths, 85);
+            assignMarks("Dinesh", SUBJECT.Science, 90);
+            assignMarks("Dinesh", SUBJECT.Social, 88);
+
+            assignMarks("Gokul", SUBJECT.Tamil, 95);
+            assignMarks("Gokul", SUBJECT.English, 89);
+            assignMarks("Gokul", SUBJECT.Maths, 85);
+            assignMarks("Gokul", SUBJECT.Science, 92);
+            assignMarks("Gokul", SUBJECT.Social, 91);
+        }
+
+        public void assignMarks(String studentName, SUBJECT subject, int marks) {
+            if (studentMarks.containsKey(studentName)) {
+                studentMarks.get(studentName).put(subject, marks);
+            } else {
+                System.out.println("Student " + studentName + " does not exist. Can't assign marks.");
+            }
+        }
+
+        public Map<SUBJECT, Integer> getMarks(String studentName) {
+            return studentMarks.getOrDefault(studentName, new HashMap<>());
+        }
+
+        public double calculateAverage(Students student) {
+            Map<SUBJECT, Integer> marks = getMarks(student.StudentName);
+            if (marks.isEmpty()) {
+                return 0;
+            }
+           int totalMarks = marks.values().stream().mapToInt(Integer::intValue).sum();
+            System.out.println(" the total marks for "+ student.StudentName +" is :" + totalMarks);
+            return (double) totalMarks / marks.size();
+        }
+        public static Students TopRanked(Maps maps) {
+            Students topRankedStudent = null;
+            int highestTotalMarks=0;
+
+            for (Students student : Students.StudentList) {
+                Map<Maps.SUBJECT, Integer> marks = maps.getMarks(student.StudentName);
+                int totalMarks = marks.values().stream().mapToInt(Integer::intValue).sum();
+
+                if (totalMarks > highestTotalMarks) {
+                    highestTotalMarks = totalMarks;
+                    topRankedStudent = student;
+
+
+                }    }
+                System.out.println("the first rank student is " + topRankedStudent);
+
+
+           return  topRankedStudent;
+        }
+
+    }
+
+    public static void main(String[] args) {
+        Maps maps = new Maps();
+        Maps. TopRanked(maps);
+        System.out.println(Students.StudentList);
+        System.out.println();
+
+        for (Students student : Students.StudentList) {
+          double average = maps.calculateAverage(student);
+            System.out.println("Average marks for " + student.StudentName + ": " + average);
+        }
+    }
+}
