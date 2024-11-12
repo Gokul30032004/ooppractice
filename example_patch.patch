@@ -4,7 +4,7 @@ Date: Mon, 8 Nov 2024 12:34:56 +0000
 Subject: [PATCH] Add a new method to handle user input and update existing method
 
 ---
- src/main/java/com/example/HelloWorld.java | 13 +++++++++++--
+ src/main/java/com/example/HelloWorld.java | 13 +++++++(exmaple commit practice)++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/src/main/java/com/example/HelloWorld.java b/src/main/java/com/example/HelloWorld.java
